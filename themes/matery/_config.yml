@@ -13,11 +13,11 @@ menu:
   Archives:
     url: /archives
     icon:
+  Photos:
+    url: /photos
+    icon:
   About:
     url: /about
-    icon:
-  Friends:
-    url: /friends
     icon:
   Contact:
     url: /contact
@@ -93,17 +93,16 @@ indexbtn:
   enable: true
   name: Github
   icon: fa-github-alt
-  url: https://github.com/MUYIio/hexo-themes-matery
+  url: https://github.com/qian-qiang
 
 # The configurations of the second line of home banner
 # icon/button will not show up if you leave the corresponding socialLink empty
 # 首页 banner 中的第二行个人信息配置，留空即不启用
 socialLink:
-  github: MUYIio
-  csdn: weixin_45682081
-  zhihu: zhihu.com/people/muyiio
-  qq: 1571504536 
-  email: 1571504536@qq.com
+  github: qian-qiang
+  csdn: weixin_43495433
+  qq: 845343253
+  email: 845343253@qq.com
 
 
 # Whether to activate the Post TOC, and Configure which title types are supported by TOC support.
@@ -124,7 +123,7 @@ code:
 reward:
   enable: true
   title: 写作不易，客官能否打赏一杯奶茶？
-  wechat: /medias/reward/wechat.png
+  wechat: /medias/reward/wechat.jpg
   alipay: /medias/reward/alipay.jpg
 # Whether to activate the copyright information of the blog and author when copying the post content.
 # minCharNumber: Approve copyright information by copying at least how many characters.
@@ -157,20 +156,20 @@ wordCount:
 # Whether to activate the 'love' effect of clicking on the page.
 # 是否激活点击页面的'爱心'效果，默认激活.
 clicklove:
-  enable: true
+  enable: false
 explosion:
   enable: false
 firework:
-  enable: false
+  enable: true
 text:
   enable: false
 
 # profile in about page, including avatars, career, and personal introductions.
 # 在”关于”页面中配置个人信息，包括头像、职业和个人介绍.
 profile:
-  avatar: https://muyiio-1300292673.cos.ap-chongqing.myqcloud.com/%E5%8D%9A%E5%AE%A2/%E5%A4%B4%E5%83%8F/%E5%A4%B4%E5%83%8F.jpg
-  career: 计算机科学与技术 | C++ | Algorithms
-  introduction: 一个简单的个人博客，记录一下学习过程，欢迎你来到我的小站，有不对的地方欢迎指正！有问题可以联系我，也欢迎与我交流探讨！
+  avatar: /favicon.png
+  career: 自动化 | C | 嵌入式 | 社会栋梁
+  introduction: 德艺双失的老艺术家
 
 # config my projects informations in about page.
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
@@ -178,10 +177,10 @@ profile:
 myProjects:
   enable: true
   data:
-    Hexo-matery-Themes:
+    blog:
       icon: fa-meetup
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
-      url: https://github.com/MUYIio/Hexo-matery-Themes
+      url: https://github.com/qian-qiang/qian-qiang.github.io
       desc: 我的个性化配置过的博客源码，即下即用。
 
 
@@ -191,16 +190,16 @@ myProjects:
 mySkills:
   enable: true
   data:
-    C++:
+    C:
       background: 'linear-gradient(to right, #9900FF 0%, #CC66FF 100%)'
       percent: 80%
     Python:
       background: 'linear-gradient(to right, #2196F3 0%, #42A5F5 100%)'
       percent: 50%
-    Java:
+    C++:
       background: 'linear-gradient(to right, #00BCD4 0%, #80DEEA 100%)'
       percent: 40%
-    SQL:
+    Qt:
       background: 'linear-gradient(to right, #4CAF50 0%, #81C784 100%)'
       percent: 30%
 
@@ -222,12 +221,12 @@ postCalendar: true
 # Gitalk 评论模块的配置，默认为不激活
 gitalk:
   enable: true
-  owner: MUYIio
-  repo: muyiio.github.io
+  owner: QQ
+  repo: qian-qiang.github.io
   oauth:
     clientId: 
     clientSecret: 
-  admin: MUYIio
+  admin: QQ
 
 # the Gitment config，default disabled
 # Gitment 评论模块的配置，默认为不激活
@@ -269,7 +268,7 @@ valine:
 # 配置是否在 header 中显示 fork me on github 的图标，默认为true，你可以修改为你的仓库地址.
 githubLink:
   enable: true
-  url: https://github.com/muyiio
+  url: https://github.com/qian-qiang
   title: Fork Me
 
 # The password verification feature of read post. To use this feature,
@@ -387,7 +386,7 @@ reprint:
 
 # 雪花特效
 snow:
-  enable: false
+  enable: true
 
 baidu_push: true
 

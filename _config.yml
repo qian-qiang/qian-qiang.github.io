@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: QianQiang`s Blog
+title: QianQiang Blog
 subtitle: 德艺双馨的老艺术家
 description: C | LeetCode | Python 
-keywords: "被动学习"
+keywords: "学习"
 author: QQ
 language: zh-CN
-timezone:
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -19,13 +19,13 @@ permalink: :title.html
 permalink_defaults:
 
 # Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
+source_dir: source #资源文件夹，这个文件夹用来存放内容
+public_dir: public #公共文件夹，这个文件夹用于存放生成的站点文件。
+tag_dir: tags #标签文件夹
+archive_dir: archives #归档文件夹
+category_dir: categories #分类文件夹
+code_dir: downloads/code #Include code 文件夹，source_dir 下的子目录
+i18n_dir: :lang #国际化（i18n）文件夹
 skip_render:
 
 # Writing

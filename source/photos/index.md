@@ -1,8 +1,8 @@
 ---
-title: contact
-date: 2020-01-01 17:17:02
-type: "contact"
-layout: "contact"
+title: photos
+date: 2020-01-01 16:42:10
+type: "photos"
+layout: "photos"
 ---
 
 # 欢迎留言

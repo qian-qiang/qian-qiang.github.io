@@ -12,32 +12,7 @@
 
 ## 演示：
 
-- [https://www.yshawlon.cn](https://www.yshawlon.cn)
-
-- 备用：[https://feezxe.gitee.io/](https://feezxe.gitee.io/)
-
-## 使用方法：
-
-一：
-
-Fork我的博客仓库就能得到一模一样的网站啦[https://github.com/MUYIio/MUYIio.github.io](https://github.com/MUYIio/MUYIio.github.io)
-
-二：
-
-1. 克隆仓库源代码：
-
-```
-git clone git@github.com:MUYIio/hexo-themes-matery.git
-```
-
-   2.删除.git文件夹，如果有自定义域名请修改根目录source/CNAME中的内容
-
-   3.打开根目录_config.yml修改仓库地址
-
-   4.根据自己需要配置一下就可以使用啦
-
-**详细教程放在知乎：[https://zhuanlan.zhihu.com/p/111614119](https://zhuanlan.zhihu.com/p/111614119)**
-
+- (https://www.qian-qiang.com)
 
 
 ## 2021-03-27更新：
