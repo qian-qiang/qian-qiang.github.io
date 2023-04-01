@@ -8,6 +8,7 @@
   "dependencies": {
     "eslint": "^6.0.1",
     "hexo": "^3.9.0",
+    "hexo-asset-image": "^1.0.0",
     "hexo-baidu-url-submit": "0.0.6",
     "hexo-deployer-git": "^1.0.0",
     "hexo-generator-archive": "^0.1.5",
@@ -18,6 +19,7 @@
     "hexo-generator-search": "^2.4.0",
     "hexo-generator-sitemap": "^1.2.0",
     "hexo-generator-tag": "^0.2.0",
+    "hexo-migrator-rss": "^1.1.0",
     "hexo-permalink-pinyin": "^1.1.0",
     "hexo-prism-plugin": "^2.3.0",
     "hexo-renderer-ejs": "^0.3.1",
