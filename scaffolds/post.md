@@ -1,7 +1,6 @@
 ---
 title: {{ title }}
 date: {{ date }}
-permalink: {{ title }}
 top: false
 cover: false
 password:

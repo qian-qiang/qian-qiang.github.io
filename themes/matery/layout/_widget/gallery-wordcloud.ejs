@@ -17,8 +17,14 @@
     <%
     let tagWordArr = [];
     site.tags.map(function(tag) {
-            tagWordArr.push({'text': tag.name, 'weight': tag.length, 'link': url_for(tag.path)});
+        if (tag.name.match(/^gallery/)) {
+            tag.posts.forEach(function(post) {
+                tagWordArr.push({'text': post.title, 'weight': 5, 'link': url_for(post.path)});
+            });
+        }
     });
+
+
 
     let tagWords = JSON.stringify(tagWordArr);
     %>
@@ -27,3 +33,4 @@
         autoResize: true
     });
 </script>
+

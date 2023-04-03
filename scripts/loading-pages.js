@@ -16,7 +16,7 @@ hexo.extend.filter.register('after_render:html', function (htmlContent) {
         align-items: center;
         background: #FFF;
         text-align: center;
-        /* loaderҳ����ʧ���ý����ķ�ʽ*/
+        /* loader页锟斤拷锟斤拷失锟斤拷锟矫斤拷锟斤拷锟侥凤拷式*/
         -webkit-transition: opacity 1s ease;
         -moz-transition: opacity 1s ease;
         -o-transition: opacity 1s ease;
@@ -114,7 +114,7 @@ hexo.extend.filter.register('after_render:html', function (htmlContent) {
         opacity: 0;
         filter: alpha(opacity=0);
     }
-    /* logo���ֶ��� */
+    /* logo锟斤拷锟街讹拷锟斤拷 */
     @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
     @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
  </style>
@@ -123,12 +123,12 @@ hexo.extend.filter.register('after_render:html', function (htmlContent) {
     const loaded = function(){
        setTimeout(function(){
             const loader = document.getElementById("loading-container");
-            loader.className="fadeout" ;//ʹ�ý����ķ�������loading page
+            loader.className="fadeout" ;//使锟矫斤拷锟斤拷锟侥凤拷锟斤拷锟斤拷锟斤拷loading page
             // document.getElementById("body-wrap").style.display="flex";
             setTimeout(function(){
                 loader.style.display="none";
             },1000); 
-        },1000);//ǿ����ʾloading page 1s  
+        },1000);//强锟斤拷锟斤拷示loading page 1s  
     };
     loaded();
 })()
