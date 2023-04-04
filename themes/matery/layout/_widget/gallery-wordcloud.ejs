@@ -19,7 +19,7 @@
     site.tags.map(function(tag) {
         if (tag.name.match(/^gallery/)) {
             tag.posts.forEach(function(post) {
-                tagWordArr.push({'text': post.title, 'weight': 5, 'link': url_for(post.path)});
+                tagWordArr.push({'text': post.title, 'weight': Math.floor(Math.random()*10), 'link': url_for(post.path)});
             });
         }
     });
