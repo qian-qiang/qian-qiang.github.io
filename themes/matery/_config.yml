@@ -397,7 +397,7 @@ reprint:
 
 # 雪花特效
 snow:
-  enable: true
+  enable: false
 
 baidu_push: true
 
