@@ -1,4 +1,5 @@
 # encoding: utf-8
+#! /usr/bin/python
 import os
 import sys
 
@@ -14,3 +15,5 @@ for file_name in os.listdir(imag_folder_path):
         # 或者保存到文件中
         with open(md_out_file, "a") as f:
             f.write(markdown_str + "\n")
+
+# eg: python imag-to-md.py source/_posts/2023/04/北京 source/_posts/2023/04/北京.md
