@@ -16,4 +16,7 @@ description:
 ---
 
 # 学习网站
-1：[bash语法](https://www.gnu.org/software/bash/manual/bash.pdf)
+[bash语法](https://www.gnu.org/software/bash/manual/bash.pdf)
+[POSIX标准](https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/)
+[glibc](https://www.gnu.org/software/libc/)
+[linux kernel](https://linux-kernel-labs.github.io/refs/heads/master/labs/deferred_work.html)
