@@ -690,3 +690,175 @@ static struct rt_sigframe __user *get_sigframe(struct ksignal *ksig,
 ```
 注意，这里的一堆操作就是将sig值给寄存器，ip寄存器设置成信号处理函数指针。具体的堆栈以及寄存器的配置还不是太懂后续研究。
 处理完信号函数之后，进行一系列地恢复操作即可。首先恢复寄存器到陷入内核态之前的状态，然后恢复栈。这就是完整的信号生命周期
+
+## signal函数
+这段代码是 Linux 内核中 `signal` 系统调用的实现，用于设置信号的处理函数。以下是对代码中每一行的解释：
+
+```c
+SYSCALL_DEFINE2(signal, int, sig, __sighandler_t, handler)
+{
+    struct k_sigaction new_sa, old_sa; // 声明新旧信号处理动作的结构体
+    int ret; // 存储函数返回值的变量
+
+    new_sa.sa.sa_handler = handler; // 设置新的信号处理函数
+    new_sa.sa.sa_flags = SA_ONESHOT | SA_NOMASK; // 设置信号处理标志
+    sigemptyset(&new_sa.sa.sa_mask); // 初始化信号屏蔽集为空集
+
+    // 调用内核函数 do_sigaction 来设置信号处理动作
+    ret = do_sigaction(sig, &new_sa, &old_sa);
+
+    // 如果设置信号处理动作失败，返回错误码；否则返回旧的信号处理函数指针
+    return ret ? ret : (unsigned long)old_sa.sa.sa_handler;
+}
+```
+
+解释每个部分：
+
+- `struct k_sigaction new_sa, old_sa;`: 声明用于存储新旧信号处理动作的结构体。
+
+- `new_sa.sa.sa_handler = handler;`: 设置新的信号处理函数为传入的 `handler` 函数指针。
+
+- `new_sa.sa.sa_flags = SA_ONESHOT | SA_NOMASK;`: 设置新的信号处理标志，其中 `SA_ONESHOT` 表示信号处理函数只会执行一次，`SA_NOMASK` 表示在信号处理函数执行期间不会阻塞其他信号。
+
+- `sigemptyset(&new_sa.sa.sa_mask);`: 初始化新的信号处理函数的屏蔽信号集为空集，即在信号处理函数执行期间不会阻塞任何信号。
+
+- `ret = do_sigaction(sig, &new_sa, &old_sa);`: 调用内核函数 `do_sigaction` 来设置信号的处理动作，并将旧的信号处理动作保存在 `old_sa` 中。
+
+- `return ret ? ret : (unsigned long)old_sa.sa.sa_handler;`: 如果设置信号处理动作失败，返回错误码；否则返回旧的信号处理函数指针。
+
+这段代码实现了用户空间程序通过系统调用 `signal` 来设置指定信号的处理函数。新的信号处理动作由一个结构体表示，其中包含处理函数、处理标志等信息。然后，调用内核函数 `do_sigaction` 来将新的信号处理动作应用于进程的信号处理表，并返回旧的信号处理函数指针。
+
+这段代码是 Linux 内核中的 `do_sigaction` 函数，用于设置信号的处理动作。以下是对代码中每一行的解释：
+
+```c
+int do_sigaction(int sig, struct k_sigaction *act, struct k_sigaction *oact)
+{
+    struct task_struct *p = current, *t; // 获取当前进程和线程
+    struct k_sigaction *k; // 指向当前进程的信号处理表项的指针
+    sigset_t mask; // 信号屏蔽集
+
+    // 检查信号编号的有效性，以及是否是仅内核处理的信号
+    if (!valid_signal(sig) || sig < 1 || (act && sig_kernel_only(sig)))
+        return -EINVAL;
+
+    // 获取当前进程的信号处理表项
+    k = &p->sighand->action[sig-1];
+
+    spin_lock_irq(&p->sighand->siglock); // 获取信号处理表锁
+    if (oact)
+        *oact = *k; // 复制当前信号处理动作到旧的信号处理动作结构体
+
+    if (act) {
+        // 设置新信号处理动作，并从新动作的屏蔽集中排除 SIGKILL 和 SIGSTOP
+        sigdelsetmask(&act->sa.sa_mask,
+                      sigmask(SIGKILL) | sigmask(SIGSTOP));
+        *k = *act; // 复制新信号处理动作到当前信号处理表项
+
+        /*
+         * POSIX 3.3.1.3 规定：
+         * "如果将挂起的信号的处理动作设置为 SIG_IGN，无论是否阻塞，都应将挂起的信号丢弃。"
+         * "如果将挂起的默认动作为 SIG_DFL，且默认动作是忽略信号（例如 SIGCHLD），则无论是否阻塞，都应将挂起的信号丢弃。"
+         */
+        if (sig_handler_ignored(sig_handler(p, sig), sig)) {
+            sigemptyset(&mask);
+            sigaddset(&mask, sig);
+            flush_sigqueue_mask(&mask, &p->signal->shared_pending); // 清除挂起的共享信号队列中的对应信号
+            for_each_thread(p, t)
+                flush_sigqueue_mask(&mask, &t->pending); // 清除每个线程的挂起信号队列中的对应信号
+        }
+    }
+
+    spin_unlock_irq(&p->sighand->siglock); // 释放信号处理表锁
+    return 0; // 返回成功
+}
+```
+
+解释每个部分：
+
+- `struct task_struct *p = current, *t;`: 获取当前进程的 `task_struct` 结构体指针，并声明一个用于遍历线程的指针。
+
+- `k = &p->sighand->action[sig-1];`: 获取当前进程的信号处理表项，其中 `sighand` 是进程的信号处理句柄，`action` 是信号处理表数组。
+
+- `spin_lock_irq(&p->sighand->siglock);`: 获取当前进程信号处理表的锁，以确保多线程并发修改信号处理表时的同步。
+
+- `if (oact) *oact = *k;`: 如果传入了旧的信号处理动作指针 `oact`，则将当前信号处理表项的内容复制到旧的动作结构体中。
+
+- `if (act) { ... }`: 如果传入了新的信号处理动作指针 `act`，则进行以下操作：
+
+  - `sigdelsetmask(&act->sa.sa_mask, sigmask(SIGKILL) | sigmask(SIGSTOP));`: 从新的信号处理动作的屏蔽集中排除 `SIGKILL` 和 `SIGSTOP`，确保这两个信号不会被阻塞。
+
+  - `*k = *act;`: 复制新的信号处理动作到当前信号处理表项。
+
+  - 根据 POSIX 规定，如果新的信号处理动作是忽略信号或恢复默认动作，需要丢弃已挂起的对应信号。
+
+- `spin_unlock_irq(&p->sighand->siglock);`: 释放当前进程信号处理表的锁。
+
+- `return 0;`: 返回成功标志。
+
+综合来看，`do_sigaction` 函数用于设置信号的处理动作，根据传入的参数进行相应的处理，包括设置新的处理动作、排除某些屏蔽信号、丢弃已挂起的信号等操作。这是 Linux 内核中信号处理机制的一部分。
+
+## 内核signal handlers结构
+```c
+struct task_struct {
+    *****************
+/* signal handlers */
+	struct signal_struct *signal;
+	struct sighand_struct *sighand;
+
+	sigset_t blocked, real_blocked;
+	sigset_t saved_sigmask;	/* restored if set_restore_sigmask() was used */
+	struct sigpending pending;
+
+	unsigned long sas_ss_sp;
+	size_t sas_ss_size;
+	int (*notifier)(void *priv);
+	void *notifier_data;
+	sigset_t *notifier_mask;
+	struct callback_head *task_works;
+
+	struct audit_context *audit_context;
+#ifdef CONFIG_AUDITSYSCALL
+	kuid_t loginuid;
+	unsigned int sessionid;
+#endif
+	struct seccomp seccomp;
+    ****************
+}
+```
+- `signal_struct` 数据结构，用于表示进程的信号相关信息。
+
+- `struct sighand_struct *sighand;`: 指向进程的信号处理句柄（signal handler）的指针，其中包含有关进程信号处理函数的信息。
+
+- `sigset_t blocked, real_blocked;`: 分别表示进程当前阻塞的信号集合和实际阻塞的信号集合。
+
+- `sigset_t saved_sigmask;`: 保存在设置了 `set_restore_sigmask()` 时被恢复的信号掩码。
+
+- `struct sigpending pending;`: 挂起信号队列，包含了已经发送但尚未处理的信号。
+
+- `unsigned long sas_ss_sp;` 和 `size_t sas_ss_size;`: 用户态的备用信号栈（Alternate Signal Stack）的起始地址和大小。
+
+- `int (*notifier)(void *priv);`: 用于通知回调的函数指针。
+
+- `void *notifier_data;`: 传递给通知回调函数的私有数据。
+
+- `sigset_t *notifier_mask;`: 指向一个信号集，用于通知回调函数决定哪些信号需要通知。
+
+- `struct callback_head *task_works;`: 与进程关联的回调函数链表。
+
+- `struct audit_context *audit_context;`: 用于存储与审计相关的上下文信息。
+
+- `kuid_t loginuid;` 和 `unsigned int sessionid;`: 用于记录登录用户的用户ID和会话ID。
+
+- `struct seccomp seccomp;`: 用于存储与 seccomp（安全计算模式）相关的信息。
+
+这个数据结构存储了与进程信号相关的各种信息，包括信号处理函数、阻塞信号、挂起信号、备用信号栈、通知回调等。这些信息在 Linux 内核中用于管理和处理进程接收到的各种信号。
+```c
+struct sighand_struct {
+	atomic_t		count;
+	struct k_sigaction	action[_NSIG];
+	spinlock_t		siglock;
+	wait_queue_head_t	signalfd_wqh;
+};
+```
+其中的action是我们最需要关注的。它是一个长度为_NSIG的数组。下标为k的元素，就代表编号为k的信号的处理函数。k_sigaction实际上就是在内核态中对于sigaction的一个包装，signal函数就是将struct k_sigaction	action[_NSIG]的相应为设置成指定的函数。
+
