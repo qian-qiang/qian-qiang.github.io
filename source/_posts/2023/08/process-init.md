@@ -12,6 +12,7 @@ tags:
 - process
 categories:
 - process
+- linux
 keywords:
 description:
 ---

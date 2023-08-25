@@ -10,7 +10,7 @@ password:
 summary:
 tags:
 - linux
-- thread
+- process
 categories:
 - linux
 keywords:
