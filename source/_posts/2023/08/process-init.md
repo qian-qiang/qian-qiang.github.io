@@ -482,7 +482,7 @@ ROOTFS_READ_ONLY=no
 /etc/default/rcS 文件是一个配置文件，用于设置系统初始化过程中的默认参数和选项。该文件中的设置会影响系统引导和初始化的行为。在许多 Linux 发行版中，/etc/default/rcS 文件用于指定与系统启动过程有关的全局设置。
 
 ## /etc/init.d/rc
-```c
+```shell
 #!/bin/sh
 #
 # rc            当运行级别变化时，此文件负责启动/停止服务。
@@ -516,9 +516,6 @@ startup_progress() {
     #fi
 }
 
-#
-# 启动脚本或程序。
-#
 startup() {
   # 处理冗长性
   [ "$VERBOSE" = very ] && echo "INIT: 正在运行 $@..."
