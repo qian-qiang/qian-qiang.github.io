@@ -13,7 +13,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://example.com
+url: https://qian-qiang.github.io/
 root: /
 permalink: :year/:month/:title.html
 permalink_defaults:
@@ -90,8 +90,14 @@ sitemap:
   
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
+# 这是指定博客主页的根路径的设置。默认情况下，博客主页可能位于网站的根目录下，
+# 但有时你可能希望将博客主页放在网站的子目录中。通过设置这个参数，你可以指定博客主页所在的路径。
 # per_page: Posts displayed per page. (0 = disable pagination)
+# 这个参数用于指定在博客主页上每页显示的文章数量。如果将其设置为0，表示禁用分页，所有博客文章将在同一页上显示。
+# 如果设置一个正整数值，系统将根据这个值来分割博客文章，每页显示指定数量的文章，而其他文章将在分页中显示。
 # order_by: Posts order. (Order by date descending by default)
+# 这个参数用于指定博客文章的排序方式。默认情况下，文章按照日期降序排列，即最新的文章排在前面。
+# 但你也可以根据需要选择其他排序方式，比如按照标题、作者、或者其他标准进行排序。
 index_generator:
   path: ''
   per_page: 12

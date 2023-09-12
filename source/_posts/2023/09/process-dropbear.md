@@ -17,7 +17,7 @@ keywords:
 description:
 ---
 
-# dropbear
+# dropbear线程
 Dropbear是一个轻量级的SSH服务器和客户端程序，用于安全地远程访问和管理计算机系统。它被设计成非常小巧和高效，适用于资源受限的环境，如嵌入式系统和嵌入式设备。Dropbear是一个自由开源软件项目，通常在类似于Linux的操作系统中使用。
 
 以下是Dropbear的一些主要特点和信息：
