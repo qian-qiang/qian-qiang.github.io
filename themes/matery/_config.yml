@@ -182,7 +182,11 @@ myProjects:
       iconBackground: 'linear-gradient(to bottom right, #66BB6A 0%, #81C784 100%)'
       url: https://github.com/qian-qiang/qian-qiang.github.io
       desc: 我的个性化配置过的博客源码，即下即用。
-
+    FOC:
+      icon: fa-skype
+      iconBackground: 'linear-gradient(to bottom right, #82d3f4 0%, #82d3f4 100%)'
+      url: https://github.com/qian-qiang/FOC.git
+      desc: ST的FOC库生成的FOC代码，即下即用。
 
 # config my skills informations in about page.
 # If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
@@ -202,6 +206,9 @@ mySkills:
     Qt:
       background: 'linear-gradient(to right, #4CAF50 0%, #81C784 100%)'
       percent: 30%
+    FPGA:
+      background: 'linear-gradient(to right, #2196F3 0%, #7FB3EE 100%)'
+      percent: 30%
 
 # config gallery of my photos in about page.
 # If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
@@ -209,9 +216,9 @@ mySkills:
 myGallery:
   enable: true
   data:
-    - /medias/featureimages/0.jpg
-    - /medias/featureimages/1.jpg
-    - /medias/featureimages/2.jpg
+    - /medias/featureimages/24.jpg
+    - /medias/featureimages/25.jpg
+    - /medias/featureimages/27.jpg
 
 # Whether to display post-calender in the `archive` page
 # 设置在归档页面中是否显示'文章日历'控件
