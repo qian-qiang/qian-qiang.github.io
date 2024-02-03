@@ -15,11 +15,13 @@ keywords:
 description:
 ---
 
-# Logic Elements and Logic Array Blocks in Cyclone IV Devices (LCyclone IV器件中的逻辑元件和逻辑阵列块)
+原文地址 [Logic Elements and Logic Array Blocks in Cyclone IV Devices](https://cdrdv2-public.intel.com/653677/cyiv-51002.pdf)
+
+# Logic Elements and Logic Array Blocks in Cyclone IV Devices （LCyclone IV器件中的逻辑元件和逻辑阵列块）
 This chapter contains feature definitions for logic elements (LEs) and logic array blocks (LABs). Details are provided on how LEs work, how LABs contain groups of LEs, and how LABs interface with the other blocks in Cyclone® IV devices.
 >这一章包含了Cyclone® IV器件中逻辑元件（LEs）和逻辑阵列块（LABs）的特性定义。详细介绍了LEs的工作原理、LABs如何包含LEs的组群，以及LABs如何与Cyclone® IV器件中的其他模块进行接口。
 
-## Logic Elements (逻辑元件)
+## Logic Elements （逻辑元件）
 Logic elements (LEs) are the smallest units of logic in the Cyclone IV device
 architecture. LEs are compact and provide advanced features with efficient logic
 usage. Each LE has the following features:
@@ -54,7 +56,7 @@ variables
 
 ![img](FPGA基本单元/Cyclone_IV_dEVICES_LEs.png)
 
-### LE Features(LE特性)
+### LE Features（LE特性）
 You can configure the programmable register of each LE for D, T, JK, or SR flipflop
 operation. Each register has data, clock, clock enable, and clear inputs. Signals that use the global clock network, general-purpose I/O pins, or any internal logic can drive the clock and clear control signals of the register. Either general-purpose I/O pins or the internal logic can drive the clock enable. For combinational functions, the LUT output bypasses the register and drives directly to the LE outputs. 
 Each LE has three outputs that drive the local, row, and column routing resources. The LUT or register output independently drives these three outputs. Two LE outputs drive the column or row and direct link routing connections, while one LE drives the local interconnect resources. This allows the LUT to drive one output while the register drives another output. This feature, called register packing, improves device utilization because the device can use the register and the LUT for unrelated functions. The LAB-wide synchronous load control signal is not available when using register packing. For more information about the synchronous load control signal, refer to “LAB Control Signals” on page 2–6. 
@@ -80,7 +82,7 @@ modules (LPM) functions. You can also create special-purpose functions that spec
 which LE operating mode to use for optimal performance, if required
 >Quartus® II软件会自动选择适用于常见功能（如计数器、加法器、减法器和算术函数）的适当模式，与参数化功能（如参数化模块库（LPM）函数）结合使用。如果需要，您还可以创建特殊用途的功能，明确指定LE操作模式以实现最佳性能
 
-### Normal Mode(普通模式)
+### Normal Mode（普通模式）
 Normal mode is suitable for general logic applications and combinational functions.
 In normal mode, four data inputs from the LAB local interconnect are inputs to a
 four-input LUT (Figure 2–2). The Quartus II Compiler automatically selects the
@@ -89,7 +91,7 @@ carry-in (cin) or the data3 signal as one of the inputs to the LUT. LEs in norma
 
 ![img](FPGA基本单元/shows_LEs_in_normal_mode.png)
 
-### Arithmetic Mode(算术模式)
+### Arithmetic Mode（算术模式）
 Arithmetic mode is ideal for implementing adders, counters, accumulators, and comparators. An LE in arithmetic mode implements a 2-bit full adder and basic carry
 chain (Figure 2–3). LEs in arithmetic mode can drive out registered and unregistered versions of the LUT output. Register feedback and register packing are supported when LEs are used in arithmetic mode.
 >算术模式非常适合实现加法器、计数器、累加器和比较器。在算术模式下，LE实现一个2位全加器和基本的进位链（图2–3）。在算术模式下的LE可以输出经过寄存器和未经寄存器的LUT输出版本。当LE在算术模式下使用时，支持寄存器反馈和寄存器打包。
@@ -105,10 +107,10 @@ carry chains for the appropriate functions.
 The Quartus II Compiler creates carry chains longer than 16 LEs by automatically linking LABs in the same column. For enhanced fitting, a long carry chain runsvertically, which allows fast horizontal connections to M9K memory blocks orembedded multipliers through direct link interconnects. For example, if a design has a long carry chain in an LAB column next to a column of M9K memory blocks, any LE output can feed an adjacent M9K memory block through the direct link interconnect. If the carry chains run horizontally, any LAB which is not next to the column of M9K memory blocks uses other row or column interconnects to drive a M9K memory block. A carry chain continues as far as a full column.
 >Quartus II编译器通过自动连接同一列中的LAB来创建长度超过16个LE的进位链。为了增强适配性，一个长的进位链垂直运行，允许通过直接链接互连快速水平连接到M9K存储器块或嵌入式乘法器。例如，如果设计在与M9K存储器块相邻的LAB列中有一个长的进位链，任何LE输出都可以通过直接链接互连馈送到相邻的M9K存储器块。如果进位链水平运行，不与M9K存储器块列相邻的任何LAB都会使用其他行或列互连来驱动M9K存储器块。进位链会一直延伸到整个列。
 
-## Logic Array Blocks(逻辑阵列块)
+## Logic Array Blocks（逻辑阵列块）
 Logic array blocks (LABs) contain groups of LEs.
 >逻辑阵列块（LABs）包含LE的组群
-### Topology(拓扑结构)
+### Topology（拓扑结构）
 Each LAB consists of the following features:
 ■ 16 LEs
 ■ LAB control signals
@@ -125,7 +127,7 @@ The local interconnect transfers signals between LEs in the same LAB. Register c
 本地互连在同一LAB中的LE之间传递信号。寄存器链连接将一个LE寄存器的输出传递到相邻LAB中的另一个LE寄存器。Quartus II编译器将相关逻辑放置在一个LAB或相邻的LAB中，从而允许使用本地和寄存器链连接以提高性能和节省面积。
 ![img](FPGA基本单元/LAB_structure_for_Cyclone_IV_devices.png)
 
-### LAB Interconnects(LAB互连)
+### LAB Interconnects（LAB互连）
 The LAB local interconnect is driven by column and row interconnects and LE
 outputs in the same LAB. Neighboring LABs, phase-locked loops (PLLs), M9K RAM
 blocks, and embedded multipliers from the left and right can also drive the local
@@ -133,7 +135,7 @@ interconnect of a LAB through the direct link connection. The direct link connec
 >LAB本地互连由同一LAB中的列和行互连以及LE输出驱动。相邻的LAB、锁相环（PLL）、M9K RAM块和来自左侧和右侧的嵌入式乘法器也可以通过直接链接连接驱动LAB的本地互连。直接链接连接功能最小化了行和列互连的使用，提供更高的性能和灵活性。每个LE可以通过快速的本地和直接链接互连驱动最多48个LE。
 
 ![img](FPGA基本单元/direct_link_connection.png)
-### LAB Control Signals(LAB控制信号)
+### LAB Control Signals（LAB控制信号）
 Each LAB contains dedicated logic for driving control signals to its LEs. The control signals include:
 >每个LAB都包含专用逻辑，用于向其LE驱动控制信号。这些控制信号包括：
 
@@ -179,3 +181,4 @@ A LAB-wide asynchronous load signal to control the logic for the preset signal o
 In addition to the clear port, Cyclone IV devices provide a chip-wide reset pin
 (DEV_CLRn) that resets all registers in the device. An option set before compilation in the Quartus II software controls this pin. This chip-wide reset overrides all other control signals.
 >除了清除端口，Cyclone IV器件提供一个芯片范围的复位引脚（DEV_CLRn），用于复位设备中的所有寄存器。在Quartus II软件中编译之前设置的选项控制此引脚。这个芯片范围的复位会覆盖所有其他控制信号。
+
