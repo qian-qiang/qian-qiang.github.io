@@ -17,7 +17,7 @@ description:
 
 原文地址 [Logic Elements and Logic Array Blocks in Cyclone IV Devices](https://cdrdv2-public.intel.com/653677/cyiv-51002.pdf)
 
-# Logic Elements and Logic Array Blocks in Cyclone IV Devices （LCyclone IV器件中的逻辑元件和逻辑阵列块）
+# Logic Elements and Logic Array Blocks in Cyclone IV Devices (LCyclone IV器件中的逻辑元件和逻辑阵列块)
 This chapter contains feature definitions for logic elements (LEs) and logic array blocks (LABs). Details are provided on how LEs work, how LABs contain groups of LEs, and how LABs interface with the other blocks in Cyclone® IV devices.
 >这一章包含了Cyclone® IV器件中逻辑元件（LEs）和逻辑阵列块（LABs）的特性定义。详细介绍了LEs的工作原理、LABs如何包含LEs的组群，以及LABs如何与Cyclone® IV器件中的其他模块进行接口。
 
